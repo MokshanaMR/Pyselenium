@@ -6,7 +6,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
-from utilities.Screenshots import capture  # make sure this utility exists
 
 
 @pytest.mark.usefixtures("setup")  # links to the fixture in base/base_test.py
@@ -19,16 +18,16 @@ class TestSnapdealE2E:
 
 
 
-    def test_add_bluetooth_speaker_to_cart(self):
-        """Add Bluetooth Speaker to cart"""
+    def test_add_backpack_to_cart(self):
+        """Add backpack to cart"""
         try:
             # Step 1: Open Snapdeal
             self.driver.get("https://www.snapdeal.com/")
             print("Opened Snapdeal homepage")
 
-            # Step 2: Search for Bluetooth Speaker and apply filter
-            self.search_and_filter_product("Bluetooth Speaker", "//label[contains(text(),'4 Stars & Up')]")
-            print("Searched for Bluetooth Speaker and applied filter")
+            # Step 2: Search for backpack and apply filter
+            self.search_and_filter_product("backpack", "//label[contains(text(),'4 Stars & Up')]")
+            print("Searched for backpack and applied filter")
 
             # Step 3: Enter pincode
             pincode_input = self.wait.until(
@@ -36,8 +35,8 @@ class TestSnapdealE2E:
                     (By.XPATH, "//input[@placeholder='Enter your pincode' and @maxlength='6']"))
             )
             pincode_input.clear()
-            pincode_input.send_keys("614901")
-            print("Entered pincode: 614901")
+            pincode_input.send_keys("600099")
+            print("Entered pincode: 600099")
 
             check_button = self.wait.until(
                 EC.element_to_be_clickable((By.XPATH, "//button[contains(@class,'pincode-check')]"))
@@ -58,7 +57,7 @@ class TestSnapdealE2E:
                 try:
                     first_product = self.wait.until(EC.element_to_be_clickable(first_product_locator))
                     first_product.click()
-                    print("Clicked on first Bluetooth Speaker product")
+                    print("Clicked on first backpack product")
                     break
                 except StaleElementReferenceException:
                     print(f"StaleElementReferenceException — retrying ({i + 1}/3)")
@@ -84,7 +83,7 @@ class TestSnapdealE2E:
             # Even if exception occurs, mark test as passed
             print(f"Exception occurred, but test still marked as PASS: {e}")
             # Optionally capture screenshot
-            # capture_failure("AddBluetoothSpeakerToCartFailure", e)
+            # capture_failure("AddbackpackToCartFailure", e)
 
 
 
@@ -126,5 +125,6 @@ class TestSnapdealE2E:
             # Capture screenshot on failure (optional)
             # capture_failure("CartEmptyCheckFailure", e)
             print(f"Exception occurred: {e}")
+
 
 
